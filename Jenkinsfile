@@ -1,6 +1,5 @@
 pipeline {
 
-```
 agent any
 
 environment {
@@ -45,6 +44,7 @@ stages {
 }
 
 post {
+
     success {
         echo 'Pipeline executed successfully.'
     }
@@ -52,7 +52,5 @@ post {
     failure {
         echo 'Pipeline failed.'
     }
-}
-```
 
 }

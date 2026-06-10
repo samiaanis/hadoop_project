@@ -18,30 +18,6 @@ stages {
         }
     }
 
-    stage('Copy Script to Remote Server') {
-        steps {
-            sh '''
-            sshpass -p "${REMOTE_PASSWORD}" scp \
-            -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=/dev/null \
-            sqoop_import.sh \
-            ${REMOTE_USER}@${REMOTE_HOST}:${PROJECT_DIR}/
-            '''
-        }
-    }
-
-    stage('Set Permission') {
-        steps {
-            sh '''
-            sshpass -p "${REMOTE_PASSWORD}" ssh \
-            -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=/dev/null \
-            ${REMOTE_USER}@${REMOTE_HOST} \
-            "chmod +x ${PROJECT_DIR}/sqoop_import.sh"
-            '''
-        }
-    }
-
     stage('Run Sqoop Import') {
         steps {
             sh '''
@@ -49,7 +25,7 @@ stages {
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null \
             ${REMOTE_USER}@${REMOTE_HOST} \
-            "cd ${PROJECT_DIR} && ./sqoop_import.sh"
+            "cd ${PROJECT_DIR} && chmod +x sqoop_import.sh && ./sqoop_import.sh"
             '''
         }
     }
@@ -70,11 +46,11 @@ stages {
 
 post {
     success {
-        echo 'Pipeline completed successfully'
+        echo 'Pipeline executed successfully.'
     }
 
     failure {
-        echo 'Pipeline failed'
+        echo 'Pipeline failed.'
     }
 }
 ```

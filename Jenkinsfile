@@ -21,11 +21,11 @@ stages {
     stage('Run Sqoop Import') {
         steps {
             sh '''
-            sshpass -p "${REMOTE_PASSWORD}" ssh \
-            -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=/dev/null \
-            ${REMOTE_USER}@${REMOTE_HOST} \
-            "cd ${PROJECT_DIR} && chmod +x sqoop_import.sh && ./sqoop_import.sh"
+                sshpass -p "${REMOTE_PASSWORD}" ssh \
+                -o StrictHostKeyChecking=no \
+                -o UserKnownHostsFile=/dev/null \
+                ${REMOTE_USER}@${REMOTE_HOST} \
+                "cd ${PROJECT_DIR} && chmod +x sqoop_import.sh && ./sqoop_import.sh"
             '''
         }
     }
@@ -33,11 +33,11 @@ stages {
     stage('Verify HDFS') {
         steps {
             sh '''
-            sshpass -p "${REMOTE_PASSWORD}" ssh \
-            -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=/dev/null \
-            ${REMOTE_USER}@${REMOTE_HOST} \
-            "hdfs dfs -ls /tmp/tfl_project_hadoop"
+                sshpass -p "${REMOTE_PASSWORD}" ssh \
+                -o StrictHostKeyChecking=no \
+                -o UserKnownHostsFile=/dev/null \
+                ${REMOTE_USER}@${REMOTE_HOST} \
+                "hdfs dfs -ls /tmp/tfl_project_hadoop"
             '''
         }
     }
